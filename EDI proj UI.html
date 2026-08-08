@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Fee Portal</title>
+    <style>
+        :root {
+            --primary-blue: #0A2540;
+            --secondary-blue: #1E40AF;
+            --light-blue: #E0E7FF;
+            --accent-red: #DC2626;
+            --hover-red: #B91C1C;
+            --bg-white: #FFFFFF;
+            --off-white: #F8FAFC;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --success-green: #16A34A;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--off-white);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--bg-white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-red);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            background-color: var(--accent-red);
+            color: var(--bg-white);
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Summary Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-blue);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .stat-card.due {
+            border-left-color: var(--accent-red);
+        }
+
+        .stat-title {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .stat-card.due .stat-value {
+            color: var(--accent-red);
+        }
+
+        /* Payment Flow Layout */
+        .portal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .portal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Installment List */
+        .installment-item {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .installment-item.active {
+            border-color: var(--secondary-blue);
+            background-color: var(--light-blue);
+        }
+
+        .installment-item.paid {
+            background-color: #F0FDF4;
+            border-color: #BBF7D0;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge.due {
+            background-color: #FEE2E2;
+            color: var(--accent-red);
+        }
+
+        .badge.paid {
+            background-color: #DCFCE7;
+            color: var(--success-green);
+        }
+
+        /* Payment Form */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .pay-btn {
+            width: 100%;
+            background-color: var(--accent-red);
+            color: var(--bg-white);
+            border: none;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pay-btn:hover {
+            background-color: var(--hover-red);
+        }
+
+        .pay-btn:disabled {
+            background-color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        /* Receipt View (Hidden by default) */
+        #receipt-view {
+            display: none;
+            max-width: 650px;
+            margin: 2rem auto;
+            background: var(--bg-white);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .receipt-header h2 {
+            color: var(--primary-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .receipt-status {
+            display: inline-block;
+            background-color: #DCFCE7;
+            color: var(--success-green);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .receipt-details {
+            margin-bottom: 2rem;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--off-white);
+        }
+
+        .receipt-row.total {
+            border-top: 2px solid var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            margin-top: 1rem;
+            padding: 0.75rem 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-blue);
+            color: var(--bg-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Print styles */
+        @media print {
+            header, .stats-grid, .portal-grid, .actions {
+                display: none !important;
+            }
+            #receipt-view {
+                display: block !important;
+                border: none;
+                box-shadow: none;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="brand">
+            <span class="brand-logo">CU</span>
+            <h2>University Fee Portal</h2>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar">AM</div>
+            <div>
+                <div style="font-size: 0.875rem; font-weight: bold;">Alex Morgan</div>
+                <div style="font-size: 0.75rem; color: var(--light-blue);">ID: STU-2026-8842</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Main Payment View -->
+        <div id="main-view">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Total Academic Fee</div>
+                    <div class="stat-value">₹9,000.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Total Paid</div>
+                    <div class="stat-value" style="color: var(--success-green);">₹3,000.00</div>
+                </div>
+                <div class="stat-card due">
+                    <div class="stat-title">Balance Due</div>
+                    <div class="stat-value">₹6,000.00</div>
+                </div>
+            </div>
+
+            <div class="portal-grid">
+                <!-- Select Installment -->
+                <div class="card">
+                    <div class="card-title">
+                        <span>Select Installment</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Term: Fall 2026</span>
+                    </div>
+
+                    <div class="installment-item paid">
+                        <div>
+                            <strong>Installment #1</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">Due: Aug 1, 2026</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div>₹3,000.00</div>
+                            <span class="badge paid">Paid</span>
+                        </div>
+                    </div>
+
+                    <div class="installment-item active">
+                        <div>
+                            <strong>Installment #2</strong>
+                            <div style="font-size: 0.8rem; color: var(--accent-red); font-weight: 600;">Due: Sep 1, 2026</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: bold;">₹3,000.00</div>
+                            <span class="badge due">Due Now</span>
+                        </div>
+                    </div>
+
+                    <div class="installment-item" style="opacity: 0.7;">
+                        <div>
+                            <strong>Installment #3</strong>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">Due: Oct 1, 2026</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div>₹3,000.00</div>
+                            <span class="badge" style="background:#E2E8F0; color:var(--text-muted);">Upcoming</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout Panel -->
+                <div class="card">
+                    <div class="card-title">Payment Details</div>
+                    <form id="payment-form" onsubmit="processPayment(event)">
+                        
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <select id="payment-method" onchange="togglePaymentFields()">
+                                <option value="Card">Credit / Debit Card</option>
+                                <option value="UPI">UPI / Instant Transfer</option>
+                                <option value="NetBanking">Net Banking</option>
+                            </select>
+                        </div>
+
+                        <!-- Card Fields -->
+                        <div id="card-fields">
+                            <div class="form-group">
+                                <label>Cardholder Name</label>
+                                <input type="text" value="Alex Morgan" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Card Number</label>
+                                <input type="text" placeholder="4532 •••• •••• 8892" value="4532 8812 9901 8892" required>
+                            </div>
+                            <div style="display: flex; gap: 1rem;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Expiry</label>
+                                    <input type="text" placeholder="MM/YY" value="09/28" required>
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label>CVV</label>
+                                    <input type="password" placeholder="•••" value="123" maxlength="3" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPI Fields (Hidden by default) -->
+                        <div id="upi-fields" style="display: none;">
+                            <div class="form-group">
+                                <label>UPI ID</label>
+                                <input type="text" placeholder="alexmorgan@okbank">
+                            </div>
+                        </div>
+
+                        <div style="margin: 1.5rem 0; padding: 1rem; background: var(--off-white); border-radius: 6px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Installment #2 Amount:</span>
+                                <span>₹3,000.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.875rem;">
+                                <span>Processing Fee (0%):</span>
+                                <span>₹0.00</span>
+                            </div>
+                            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 0.5rem 0;">
+                            <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--primary-blue);">
+                                <span>Total Payable:</span>
+                                <span>₹3,000.00</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="pay-btn" id="pay-button">
+                            Pay ₹3,000.00
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Receipt View (Populated via JS) -->
+        <div id="receipt-view">
+            <div class="receipt-header">
+                <h2>City University</h2>
+                <p style="color: var(--text-muted); font-size: 0.875rem;">Official Payment Receipt</p>
+                <div class="receipt-status">✓ PAYMENT SUCCESSFUL</div>
+            </div>
+
+            <div class="receipt-details">
+                <div class="receipt-row">
+                    <span style="color: var(--text-muted);">Transaction Reference:</span>
+                    <strong id="receipt-tx-id">TXN-9081234712</strong>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--text-muted);">Date & Time:</span>
+                    <span id="receipt-date">--</span>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--text-muted);">Student Name:</span>
+                    <span>Alex Morgan</span>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--text-muted);">Student ID:</span>
+                    <span>STU-2026-8842</span>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--text-muted);">Program:</span>
+                    <span>B.Tech Computer Science</span>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--text-muted);">Payment Description:</span>
+                    <span>Installment #2 (Fall 2026)</span>
+                </div>
+                <div class="receipt-row">
+                    <span style="color: var(--text-muted);">Payment Method:</span>
+                    <span id="receipt-method">Card</span>
+                </div>
+
+                <div class="receipt-row total">
+                    <span>Amount Paid:</span>
+                    <span id="receipt-amount">₹3,000.00</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn-secondary" onclick="window.print()">Print Receipt</button>
+                <button class="btn-secondary" style="background-color: var(--off-white); color: var(--text-dark); border: 1px solid var(--border-color);" onclick="resetPortal()">Back to Dashboard</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function togglePaymentFields() {
+            const method = document.getElementById('payment-method').value;
+            const cardFields = document.getElementById('card-fields');
+            const upiFields = document.getElementById('upi-fields');
+
+            if (method === 'Card') {
+                cardFields.style.display = 'block';
+                upiFields.style.display = 'none';
+            } else if (method === 'UPI') {
+                cardFields.style.display = 'none';
+                upiFields.style.display = 'block';
+            } else {
+                cardFields.style.display = 'none';
+                upiFields.style.display = 'none';
+            }
+        }
+
+        function processPayment(event) {
+            event.preventDefault();
+            
+            const btn = document.getElementById('pay-button');
+            btn.disabled = true;
+            btn.innerHTML = 'Processing Transaction...';
+
+            // Simulate server network delay
+            setTimeout(() => {
+                // Generate random Receipt details
+                const now = new Date();
+                const txnId = 'TXN-' + Math.floor(100000000 + Math.random() * 900000000);
+                const method = document.getElementById('payment-method').value;
+
+                document.getElementById('receipt-tx-id').innerText = txnId;
+                document.getElementById('receipt-date').innerText = now.toLocaleString();
+                document.getElementById('receipt-method').innerText = method;
+
+                // Hide Main View, Show Receipt
+                document.getElementById('main-view').style.display = 'none';
+                document.getElementById('receipt-view').style.display = 'block';
+
+                // Reset button state
+                btn.disabled = false;
+                btn.innerHTML = 'Pay ₹3,000.00';
+            }, 1500);
+        }
+
+        function resetPortal() {
+            document.getElementById('receipt-view').style.display = 'none';
+            document.getElementById('main-view').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
