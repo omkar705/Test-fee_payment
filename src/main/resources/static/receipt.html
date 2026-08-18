@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Fee Payment Receipt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="payment-flow.css">
+</head>
+<body>
+<div class="background-globes"><div class="globe globe-1"></div><div class="globe globe-2"></div><div class="globe globe-3"></div></div>
+<main class="app-container">
+<div class="card glass-card fade-in payment-flow-card" id="receiptCard">
+    <div class="receipt-header">
+        <h1>YOUR COLLEGE NAME</h1>
+        <p>STUDENT FEE PAYMENT RECEIPT</p>
+    </div>
+
+    <div class="receipt-section-title">Student Information</div>
+    <div class="detail-box">
+        <div class="detail-row"><span>Student Name</span><strong>Alex Morgan</strong></div>
+        <div class="detail-row"><span>Student ID</span><strong>STU-2026-8942</strong></div>
+        <div class="detail-row"><span>Course</span><strong>Computer Science</strong></div>
+        <div class="detail-row"><span>Academic Year</span><strong>2026-27</strong></div>
+    </div>
+
+    <div class="receipt-section-title">Fee Details</div>
+    <div class="detail-box">
+        <div class="detail-row"><span>Tuition Fee (Fall 2026)</span><strong>₹4,500.00</strong></div>
+        <div class="detail-row"><span>Library & Digital Resources</span><strong>₹350.00</strong></div>
+        <div class="detail-row"><span>Campus Infrastructure & Amenities</span><strong>₹200.00</strong></div>
+        <div class="receipt-total"><span>Total Paid</span><span id="totalAmount">₹5,050.00</span></div>
+    </div>
+
+    <div class="receipt-section-title">Transaction Details</div>
+    <div class="detail-box">
+        <div class="detail-row"><span>Transaction Reference</span><strong id="transactionReference">-</strong></div>
+        <div class="detail-row"><span>Payment ID</span><strong id="paymentId">-</strong></div>
+        <div class="detail-row"><span>Payment Method</span><strong id="paymentMethod">-</strong></div>
+        <div class="detail-row"><span>Gateway</span><strong id="gatewayName">Razorpay</strong></div>
+        <div class="detail-row"><span>Status</span><strong class="status-success">SUCCESS</strong></div>
+        <div class="detail-row"><span>Payment Date</span><strong id="paymentDate">-</strong></div>
+        <div class="detail-row"><span>Receipt ID</span><strong id="receiptId">-</strong></div>
+    </div>
+
+    <div class="receipt-actions no-print">
+        <button class="btn btn-secondary" onclick="window.print()">Print Receipt</button>
+        <a class="btn btn-primary" href="index.html">Back to Portal</a>
+    </div>
+</div>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const id = new URLSearchParams(window.location.search).get("transactionId");
+    if (!id) return;
+
+    const methodKey = sessionStorage.getItem("paymentMethod") || "card";
+    const method = methodKey === "upi" ? "UPI / Instant Pay" :
+                   methodKey === "netbanking" ? "Net Banking" : "Credit / Debit Card";
+
+    try {
+        const [transactionResponse, receiptResponse] = await Promise.all([
+            fetch("/api/payments/transactions/" + encodeURIComponent(id)),
+            fetch("/api/payments/receipts/transaction/" + encodeURIComponent(id))
+        ]);
+
+        if (!transactionResponse.ok || !receiptResponse.ok) throw new Error("Receipt data unavailable.");
+
+        const t = await transactionResponse.json();
+        const r = await receiptResponse.json();
+
+        document.getElementById("transactionReference").textContent = t.transactionReference || "-";
+        document.getElementById("paymentId").textContent = t.paymentId ?? "-";
+        document.getElementById("gatewayName").textContent = t.gatewayName || "Razorpay";
+        document.getElementById("paymentMethod").textContent = method;
+        document.getElementById("totalAmount").textContent =
+            "₹" + Number(t.amount || 0).toLocaleString("en-IN", {minimumFractionDigits: 2});
+        document.getElementById("paymentDate").textContent =
+            t.transactionDate ? new Date(t.transactionDate).toLocaleString("en-IN") : "-";
+        document.getElementById("receiptId").textContent = r.receiptId ?? "-";
+    } catch (error) {
+        document.getElementById("transactionReference").textContent = "Unable to load";
+    }
+});
+</script>
+</body>
+</html>
