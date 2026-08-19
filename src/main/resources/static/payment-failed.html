@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Failed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="payment-flow.css">
+</head>
+<body>
+<div class="background-globes"><div class="globe globe-1"></div><div class="globe globe-2"></div><div class="globe globe-3"></div></div>
+<main class="app-container">
+<div class="card glass-card fade-in payment-flow-card">
+    <div class="failed-wrap">
+        <div class="failed-mark">!</div>
+        <h1 class="flow-title">Payment Could Not Be Completed</h1>
+        <p class="flow-subtitle">The payment was not completed or failed verification.</p>
+        <div class="detail-box">
+            <div class="detail-row"><span>Reason</span><strong id="reason">Payment processing failed.</strong></div>
+        </div>
+        <a class="btn btn-primary btn-full" href="index.html">Try Again</a>
+        <a class="btn btn-secondary btn-full" style="margin-top:10px" href="index.html">Back to Portal</a>
+    </div>
+</div>
+</main>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const reason = sessionStorage.getItem("paymentError");
+    if (reason) document.getElementById("reason").textContent = reason;
+});
+</script>
+</body>
+</html>
