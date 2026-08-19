@@ -1,0 +1,215 @@
+=== PAGE 1 ===
+Fee  Payment  Management  Platform  
+Team-wise  Work  Assignment  Document   
+Project  Title  
+Fee  Payment  Management  Platform  
+ 
+Problem  Statement  
+Design  and  develop  a  secure  REST-based  platform  to  manage  student  fee  payments,  payment  
+records,
+ 
+receipts,
+ 
+and
+ 
+financial
+ 
+reports.
+ 
+The
+ 
+platform
+ 
+should
+ 
+provide
+ 
+authenticated
+ 
+and
+ 
+authorized
+ 
+access
+ 
+using
+ 
+REST
+ 
+APIs,
+ 
+HTTPS,
+ 
+and
+ 
+JWT/OAuth-based
+ 
+security.
+ 
+It
+ 
+should
+ 
+support
+ 
+concurrent
+ 
+payment
+ 
+processing
+ 
+and
+ 
+secure
+ 
+logging
+ 
+to
+ 
+ensure
+ 
+data
+ 
+protection,
+ 
+reliability,
+ 
+and
+ 
+traceability.
+ 
+Common  Responsibilities  (All  Teams)  
+Before  beginning  development,  all  teams  must  jointly  finalize:  
+●  Software  Requirement  Specification  (SRS)  ●  ER  Diagram  ●  Database  Schema  ●  Table  Names  and  Primary  Keys  ●  Coding  Standards  ●  Folder  Structure  ●  Naming  Conventions  ●  REST  API  Design  ●  API  Documentation  (Swagger/OpenAPI)  ●  Git  Repository  Structure  (if  applicable)  ●  HTTPS  Configuration  Strategy  ●  JWT/OAuth  Authentication  Flow  ●  Integration  Plan  
+
+=== PAGE 2 ===
+●  Test  Plan  
+TEAM  1  
+Worklet:  Student,  Authentication  &  Fee  Management  
+Objective  
+Develop  the  core  platform  responsible  for  student  management,  authentication,  fee  structure  
+management,
+ 
+and
+ 
+fee
+ 
+payment
+ 
+initiation.
+ 
+Major  Modules  
+●  Student  Registration  ●  Login  Authentication  ●  JWT/OAuth  Authentication  ●  Role-Based  Access  Control  ●  Student  Profile  Management  ●  Fee  Structure  Management  ●  Fee  Payment  Initiation  ●  Fee  Status  Tracking  ●  Payment  History  
+Database  Tables  
+●  Students  ●  Users  ●  Roles  ●  FeeStructure  ●  FeePayments  
+  
+Subject-wise  Implementation  
+Subject  Expected  Implementation  
+Basic  Programming  Modular  program  design,  input  validation,  exception  handling  
+
+=== PAGE 3 ===
+Object-Oriented  Programming  
+Student,  User,  Fee,  Payment  classes  
+Data  Structures  Arrays/Lists  for  payment  history  and  student  records  
+DBMS  CRUD  operations,  SQL  queries,  constraints,  foreign  keys  
+Computer  Networks  REST  API  endpoints,  HTTPS  communication  
+Operating  Systems  Authentication  logs  and  secure  file  handling  
+Software  Engineering  SRS,  UML,  Use  Case  Diagram,  Class  Diagram  
+Web  Technology  Login  Page,  Student  Dashboard,  Fee  Payment  Screens   
+Deliverables  
+●  Login  Module  ●  JWT  Authentication  Module  ●  Student  Management  Module  ●  Fee  Structure  Module  ●  Fee  Payment  Initiation  Module  ●  REST  API  Documentation  ●  Database  Scripts  ●  UML  Diagrams  ●  Unit  Testing  Report  
+ 
+TEAM  2  
+Worklet:  Payment  Processing  &  Transaction  Management  
+Objective  
+Develop  secure  payment  processing,  transaction  management,  receipt  generation,  and  
+concurrent
+ 
+payment
+ 
+handling.
+ 
+Major  Modules  
+●  Payment  Processing  
+
+=== PAGE 4 ===
+●  Online  Payment  Gateway  Simulation  ●  Payment  Verification  ●  Payment  Status  Updates  ●  Receipt  Generation  ●  Transaction  History  ●  Payment  Rollback  ●  Concurrent  Payment  Handling  
+Database  Tables  
+●  Transactions  ●  Receipts  ●  PaymentGatewayLogs  
+ 
+Subject-wise  Implementation  
+Subject  Expected  Implementation  
+Basic  Programming  Payment  processing  logic  and  validation  
+Object-Oriented  Programming  
+Transaction,  Receipt,  PaymentGateway  classes  
+Data  Structures  Queue  for  payment  request  processing  
+DBMS  Transaction  management,  ACID  properties,  SQL  transactions  
+Computer  Networks  Secure  REST  APIs,  HTTPS  communication  
+Operating  Systems  Thread  synchronization  for  concurrent  payment  requests  
+Software  Engineering  Activity  Diagram,  Sequence  Diagram  
+Web  Technology  Payment  Interface,  Receipt  Pages   
+Deliverables  
+●  Payment  Processing  Module  ●  Transaction  Management  Module  ●  Receipt  Generation  Module  ●  Concurrency  Demonstration  ●  REST  API  Documentation  
+
+=== PAGE 5 ===
+●  Database  Scripts  ●  UML  Diagrams  ●  Unit  Testing  Report  
+ 
+TEAM  3  
+Worklet:  Reports,  Security  Monitoring  &  System  
+Administration
+ 
+Objective  
+Develop  financial  reporting,  audit  logging,  security  monitoring,  administrative  features,  and  
+integrate
+ 
+all
+ 
+project
+ 
+modules.
+ 
+Major  Modules  
+●  Fee  Collection  Reports  ●  Pending  Fee  Reports  ●  Student  Payment  Reports  ●  Dashboard  &  Analytics  ●  Audit  Logs  ●  Secure  Log  Management  ●  Backup  &  Restore  ●  System  Monitoring  ●  Admin  Dashboard  
+Database  Tables  
+●  Reports  ●  AuditLogs  ●  SecurityLogs  ●  BackupHistory  
+ 
+ 
+ 
+
+=== PAGE 6 ===
+Subject-wise  Implementation  
+Subject  Expected  Implementation  
+Basic  Programming  Report  generation  and  log  processing  
+Object-Oriented  Programming  Report,  LogManager,  SecurityMonitor  classes  
+Data  Structures  Queue/Stack  for  log  management  
+DBMS  Aggregate  queries,  report  generation  
+Computer  Networks  Secure  REST  API  access  using  HTTPS  
+Operating  Systems  Secure  logging,  backup  scheduling,  file  management  
+Software  Engineering  Integration  Testing,  Documentation  
+Web  Technology  Dashboard,  Reports,  Charts,  Export  Pages   
+Deliverables  
+●  Admin  Dashboard  ●  Financial  Reports  Module  ●  Audit  Log  Module  ●  Security  Monitoring  Module  ●  Backup  &  Restore  Module  ●  Integration  Report  ●  Testing  Report  
+Key  Performance  Indicators  (KPIs)  
+Sr.  No.  
+Key  Performance  Indicator  (KPI)  
+Target  
+1  Functional  Completeness  100%  implementation  of  all  modules  as  per  the  problem  statement  
+2  Payment  Automation  100%  automation  of  fee  payment,  receipt  generation,  and  reporting  
+
+=== PAGE 7 ===
+3  Authentication  &  Authorization  
+Secure  JWT/OAuth  authentication  with  100%  role-based  access  
+4  REST  API  Reliability  All  REST  APIs  function  correctly  with  proper  HTTP  status  codes  and  validation  
+5  Secure  Communication  100%  HTTPS-enabled  communication  between  client  and  server  
+6  Concurrent  Payment  Handling  
+Support  at  least  10  simultaneous  payment  requests  without  race  conditions  or  data  inconsistency  
+7  Transaction  Accuracy  100%  accurate  fee  payment  and  receipt  generation  
+8  Report  Generation  Financial  reports  generated  within  ≤  5  seconds  
+9  Code  Quality  &  Documentation  
+Complete  SRS,  UML,  ER  Diagram,  API  Documentation,  Database  Schema,  and  Testing  Reports  
+10  System  Integration  &  Reliability  
+Successful  integration  of  all  three  worklets  with  no  critical  runtime  errors  during  final  demonstration   
+Expected  Final  Outcome  
+At  the  end  of  the  semester,  the  integrated  platform  should  support:  
+●  Secure  Login  using  JWT/OAuth  ●  Role-Based  Access  Control  ●  Student  Profile  Management  ●  Fee  Structure  Management  ●  Online  Fee  Payment  ●  Secure  REST  APIs  ●  HTTPS  Communication  ●  Payment  Processing  ●  Receipt  Generation  ●  Concurrent  Payment  Processing  ●  Financial  Reports  ●  Dashboard  &  Analytics  ●  Audit  &  Security  Logs  ●  Backup  &  Restore  ●  Database-Driven  Operations  ●  Complete  API  Documentation  ●  Complete  Documentation  and  Testing  
+

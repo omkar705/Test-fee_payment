@@ -137,6 +137,11 @@ body {
     box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
 }
 
+.logo-badge.signup-badge {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+}
+
 .card-header h2 {
     font-family: var(--font-display);
     font-size: 1.75rem;
@@ -154,17 +159,17 @@ body {
 .form-layout {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .input-group label {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
@@ -173,7 +178,7 @@ body {
 
 .input-group input {
     width: 100%;
-    padding: 14px 16px;
+    padding: 13px 16px;
     background: rgba(15, 23, 42, 0.6);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -197,6 +202,37 @@ body {
     border-radius: var(--radius-sm);
     font-size: 0.85rem;
     text-align: center;
+}
+
+.success-banner {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #6ee7b7;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* Toggle Link */
+.toggle-link-wrapper {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.link-btn {
+    color: #818cf8;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.link-btn:hover {
+    color: #a5b4fc;
+    text-decoration: underline;
 }
 
 /* Buttons */
@@ -263,7 +299,7 @@ body {
 
 /* Demo Hint */
 .demo-hint {
-    margin-top: 10px;
+    margin-top: 6px;
     padding: 12px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px dashed var(--border-color);
