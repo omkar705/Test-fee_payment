@@ -448,6 +448,174 @@ body {
     font-family: var(--font-display);
 }
 
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.dashboard-card {
+    background: rgba(15, 23, 42, 0.48);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+}
+
+.card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.card-heading h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.history-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.12);
+    color: #b7c2ff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.history-pill.success {
+    background: rgba(34, 197, 94, 0.12);
+    color: #bbf7d0;
+}
+
+.payment-history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    background: rgba(10, 16, 27, 0.42);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+}
+
+.history-top,
+.history-details,
+.history-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.history-top {
+    margin-bottom: 8px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 5px 8px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: rgba(34, 197, 94, 0.16);
+    color: #bbf7d0;
+}
+
+.history-amount {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.history-details {
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+}
+
+.history-details strong {
+    color: var(--text-primary);
+    font-size: 0.83rem;
+}
+
+.history-link {
+    color: #a5b4fc;
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.receipt-summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 100px;
+}
+
+.receipt-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.summary-label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.receipt-summary-header h4 {
+    margin: 4px 0 0;
+    font-size: 1rem;
+}
+
+.summary-amount {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-green);
+}
+
+.receipt-summary-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+}
+
+.empty-state {
+    padding: 12px 14px;
+    background: rgba(15, 23, 42, 0.3);
+    border: 1px dashed rgba(148, 163, 184, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.empty-state.small {
+    padding: 10px 12px;
+}
+
 /* Payment Method Grid */
 .payment-method-section {
     margin-bottom: 24px;

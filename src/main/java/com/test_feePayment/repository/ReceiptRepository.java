@@ -62,6 +62,14 @@ public class ReceiptRepository {
     }
 
     /**
+     * Executes raw PostgreSQL SELECT statement by student_id
+     */
+    public List<Receipt> findByStudentId(Long studentId) {
+        String sql = "SELECT * FROM receipts WHERE student_id = ? ORDER BY receipt_id DESC";
+        return jdbcTemplate.query(sql, rowMapper, studentId);
+    }
+
+    /**
      * Executes raw PostgreSQL SELECT statement to fetch all receipts
      */
     public List<Receipt> findAll() {

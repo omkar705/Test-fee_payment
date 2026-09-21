@@ -13,13 +13,16 @@ import com.test_feePayment.repository.PaymentSettlementJdbcRepository;
 import com.test_feePayment.repository.ReceiptRepository;
 import com.test_feePayment.repository.TransactionRepository;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.OffsetDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,6 +35,7 @@ public class PaymentService {
     private final PaymentSettlementJdbcRepository settlementRepository;
     private final RazorpayConfig razorpayConfig;
     private final RazorpayClient razorpayClient;
+    private final JdbcTemplate jdbcTemplate;
 
     public PaymentService(
             TransactionRepository transactionRepository,
@@ -39,7 +43,8 @@ public class PaymentService {
             ReceiptRepository receiptRepository,
             PaymentSettlementJdbcRepository settlementRepository,
             RazorpayConfig razorpayConfig,
-            RazorpayClient razorpayClient) {
+            RazorpayClient razorpayClient,
+            JdbcTemplate jdbcTemplate) {
 
         this.transactionRepository = transactionRepository;
         this.logRepository = logRepository;
@@ -47,6 +52,7 @@ public class PaymentService {
         this.settlementRepository = settlementRepository;
         this.razorpayConfig = razorpayConfig;
         this.razorpayClient = razorpayClient;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Transactional
@@ -198,6 +204,35 @@ public class PaymentService {
             Long transactionId) {
 
         return receiptRepository.findByTransactionId(transactionId);
+    }
+
+    public List<Receipt> getReceiptsByStudentId(Long studentId) {
+        return receiptRepository.findByStudentId(studentId);
+    }
+
+    public List<Map<String, Object>> getPaymentHistoryByStudentId(Long studentId) {
+        String sql = """
+                SELECT t.transaction_id, t.payment_id, t.transaction_reference, t.gateway_name,
+                       t.transaction_status, t.transaction_date, t.amount, r.receipt_id, r.receipt_url
+                FROM receipts r
+                INNER JOIN transactions t ON t.transaction_id = r.transaction_id
+                WHERE r.student_id = ?
+                ORDER BY t.transaction_date DESC
+                """;
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Map<String, Object> item = new LinkedHashMap<>();
+            item.put("transactionId", rs.getLong("transaction_id"));
+            item.put("paymentId", rs.getLong("payment_id"));
+            item.put("transactionReference", rs.getString("transaction_reference"));
+            item.put("gatewayName", rs.getString("gateway_name"));
+            item.put("transactionStatus", rs.getString("transaction_status"));
+            item.put("transactionDate", rs.getObject("transaction_date", OffsetDateTime.class).toString());
+            item.put("amount", rs.getBigDecimal("amount").doubleValue());
+            item.put("receiptId", rs.getLong("receipt_id"));
+            item.put("receiptUrl", rs.getString("receipt_url"));
+            return item;
+        }, studentId);
     }
 
     // =========================================================

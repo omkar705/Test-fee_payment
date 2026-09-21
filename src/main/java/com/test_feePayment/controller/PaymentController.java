@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -121,6 +122,12 @@ public class PaymentController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/history/student/{studentId}")
+    public ResponseEntity<List<Map<String, Object>>> getPaymentHistoryByStudent(@PathVariable Long studentId) {
+        List<Map<String, Object>> history = paymentService.getPaymentHistoryByStudentId(studentId);
+        return ResponseEntity.ok(history);
+    }
+
     @PutMapping("/transactions/{id}/status")
     public ResponseEntity<String> updateTransactionStatus(
             @PathVariable Long id,
@@ -196,6 +203,11 @@ public class PaymentController {
                 .getReceiptByTransactionId(transactionId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/receipts/student/{studentId}")
+    public ResponseEntity<List<Receipt>> getReceiptsByStudent(@PathVariable Long studentId) {
+        return ResponseEntity.ok(paymentService.getReceiptsByStudentId(studentId));
     }
 
     // =========================================================

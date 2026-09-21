@@ -60,6 +60,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("transactionDate").textContent =
             t.transactionDate ? new Date(t.transactionDate).toLocaleString("en-IN") : new Date().toLocaleString("en-IN");
 
+        const paymentRecord = {
+            transactionId: t.transactionId,
+            paymentId: t.paymentId,
+            transactionReference: t.transactionReference,
+            transactionStatus: "SUCCESS",
+            amount: t.amount,
+            transactionDate: t.transactionDate || new Date().toISOString(),
+            receiptUrl: "receipt.html?transactionId=" + encodeURIComponent(t.transactionId)
+        };
+
+        const storedHistory = JSON.parse(sessionStorage.getItem("studentPaymentHistory") || "[]");
+        const filtered = storedHistory.filter((item) => String(item.transactionId || item.id) !== String(t.transactionId));
+        filtered.unshift(paymentRecord);
+        sessionStorage.setItem("studentPaymentHistory", JSON.stringify(filtered.slice(0, 8)));
+
         document.getElementById("receiptButton").href =
             "receipt.html?transactionId=" + encodeURIComponent(t.transactionId);
     } catch (error) {
